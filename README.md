@@ -124,7 +124,7 @@ Annotations: Configures AWS-specific annotations for load balancer behavior.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | 1.9.8 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | 5.76.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | 5.78.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | 2.33.0 |
 
 ## Modules
@@ -137,13 +137,13 @@ Annotations: Configures AWS-specific annotations for load balancer behavior.
 
 | Name | Type |
 |------|------|
-| [aws_security_group.eks_cluster](https://registry.terraform.io/providers/hashicorp/aws/5.76.0/docs/resources/security_group) | resource |
-| [aws_security_group.eks_nodes](https://registry.terraform.io/providers/hashicorp/aws/5.76.0/docs/resources/security_group) | resource |
+| [aws_security_group.eks_cluster](https://registry.terraform.io/providers/hashicorp/aws/5.78.0/docs/resources/security_group) | resource |
+| [aws_security_group.eks_nodes](https://registry.terraform.io/providers/hashicorp/aws/5.78.0/docs/resources/security_group) | resource |
 | [kubernetes_deployment.nginx](https://registry.terraform.io/providers/hashicorp/kubernetes/2.33.0/docs/resources/deployment) | resource |
 | [kubernetes_service.nginx](https://registry.terraform.io/providers/hashicorp/kubernetes/2.33.0/docs/resources/service) | resource |
-| [aws_eks_cluster_auth.eks](https://registry.terraform.io/providers/hashicorp/aws/5.76.0/docs/data-sources/eks_cluster_auth) | data source |
-| [aws_subnets.existing_public_subnets](https://registry.terraform.io/providers/hashicorp/aws/5.76.0/docs/data-sources/subnets) | data source |
-| [aws_vpc.existing_vpc](https://registry.terraform.io/providers/hashicorp/aws/5.76.0/docs/data-sources/vpc) | data source |
+| [aws_eks_cluster_auth.eks](https://registry.terraform.io/providers/hashicorp/aws/5.78.0/docs/data-sources/eks_cluster_auth) | data source |
+| [aws_subnets.existing_public_subnets](https://registry.terraform.io/providers/hashicorp/aws/5.78.0/docs/data-sources/subnets) | data source |
+| [aws_vpc.existing_vpc](https://registry.terraform.io/providers/hashicorp/aws/5.78.0/docs/data-sources/vpc) | data source |
 
 ## Inputs
 
@@ -160,5 +160,10 @@ Annotations: Configures AWS-specific annotations for load balancer behavior.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_cluster_endpoint"></a> [cluster\_endpoint](#output\_cluster\_endpoint) | Endpoint for EKS cluster |
+| <a name="output_cluster_security_group_id"></a> [cluster\_security\_group\_id](#output\_cluster\_security\_group\_id) | Security group ID for EKS cluster |
+| <a name="output_node_security_group_id"></a> [node\_security\_group\_id](#output\_node\_security\_group\_id) | Security group ID for EKS nodes |
+| <a name="output_service_url"></a> [service\_url](#output\_service\_url) | URL of the Nginx service |
 <!-- END_TF_DOCS -->

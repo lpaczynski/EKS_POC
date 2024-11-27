@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-hello-world
+  labels:
+    app: nginx-hello-world
+    environment: production
+    tier: backend
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "80"
+spec:
+  replicas: 3  # Adjust replicas for high availability
+  selector:
+    matchLabels:
+      app: nginx-hello-world
+  template:
+    metadata:
+      labels:
+        app: nginx-hello-world
+        environment: production
+        tier: backend
+    spec:
+      containers:
+      - name: nginx-hello-world
+        image: nginx:latest
+        imagePullPolicy: IfNotPresent  # Avoid unnecessary image pulls
+        ports:
+        - containerPort: 80
+        env:
+        - name: MESSAGE
+          value: "hello world"
+        command:
+        - /bin/sh
+        - -c
+        - echo $MESSAGE | nc -l -p 80
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+        readinessProbe:  # Ensures the pod is ready before sending traffic
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:  # Ensures the pod is restarted if it becomes unresponsive
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 20
+      nodeSelector:
+        role: worker  # Ensure the pod runs on appropriate nodes
+      tolerations:  # Allow deployment to nodes with specific taints
+      - key: "dedicated"
+        operator: "Equal"
+        value: "worker"
+        effect: "NoSchedule"
+      affinity:  # Schedule pods close to each other
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - nginx-hello-world
+            topologyKey: "kubernetes.io/hostname"
